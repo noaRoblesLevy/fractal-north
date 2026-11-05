@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NoteCard from '../../components/NoteCard.astro';
+import { getNotes } from '../../lib/content';
+
+const notes = await getNotes();
+---
+<BaseLayout
+  title="Notes"
+  description="Short-form entries: puzzles, paper notes, and study notes."
+  ogRoute="notes"
+>
+  <header class="page-head container">
+    <p class="eyebrow">Fractal North</p>
+    <h1>Notes</h1>
+    <p class="lede">
+      Short-form entries. Puzzles, notes on papers, and study notes, kept brief
+      on purpose.
+    </p>
+  </header>
+
+  <section class="section container">
+    {notes.length > 0 ? (
+      <div class="grid grid-3">
+        {notes.map((entry) => <NoteCard entry={entry} />)}
+      </div>
+    ) : (
+      <p class="muted">No notes yet.</p>
+    )}
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding-top: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
+  }
+  .page-head h1 {
+    font-size: var(--step-3);
+    margin-top: 0.4rem;
+  }
+  .page-head .lede {
+    margin-top: 1rem;
+  }
+  .section {
+    padding-top: 2rem;
+  }
+</style>

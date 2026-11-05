@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getProjects } from '../../lib/content';
+
+const projects = await getProjects();
+---
+<BaseLayout
+  title="Projects"
+  description="Systems and tooling: limit order books, market-making simulators, and research infrastructure."
+  ogRoute="projects"
+>
+  <header class="page-head container">
+    <p class="eyebrow">Fractal North</p>
+    <h1>Projects</h1>
+    <p class="lede">
+      Systems I build to understand markets from the inside: order books,
+      simulators, and the tooling around them.
+    </p>
+  </header>
+
+  <section class="section container">
+    <div class="grid grid-2">
+      {projects.map((entry) => <ProjectCard entry={entry} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding-top: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
+  }
+  .page-head h1 {
+    font-size: var(--step-3);
+    margin-top: 0.4rem;
+  }
+  .page-head .lede {
+    margin-top: 1rem;
+  }
+  .section {
+    padding-top: 2rem;
+  }
+</style>

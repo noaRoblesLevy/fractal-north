@@ -1,0 +1,68 @@
+---
+/**
+ * The Facet Compass star mark, inline so it can be sized and themed.
+ * variant: "color" (faceted gradient) or "mono" (uses currentColor).
+ */
+interface Props {
+  size?: number | string;
+  variant?: 'color' | 'mono';
+  class?: string;
+  id?: string;
+}
+const { size = 40, variant = 'color', class: className, id } = Astro.props;
+// Unique gradient ids so multiple stars on a page don't collide.
+const uid = id ?? `fn-${Math.random().toString(36).slice(2, 8)}`;
+const light = variant === 'color';
+---
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 100 100"
+  width={size}
+  height={size}
+  class:list={['fn-star', className]}
+  role="img"
+  aria-label="Fractal North"
+>
+  {light && (
+    <defs>
+      <linearGradient id={`${uid}-l`} x1="0" y1="2" x2="0" y2="94" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#E4EDFF" />
+        <stop offset="0.45" stop-color="#BBD3FF" />
+        <stop offset="1" stop-color="#4C86FF" />
+      </linearGradient>
+      <linearGradient id={`${uid}-d`} x1="0" y1="2" x2="0" y2="94" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#4C86FF" />
+        <stop offset="0.45" stop-color="#1F4FE0" />
+        <stop offset="1" stop-color="#16308F" />
+      </linearGradient>
+    </defs>
+  )}
+  <g fill={light ? `url(#${uid}-l)` : 'currentColor'}>
+    <polygon points="50,4 45.41,38.91 50,38.91" />
+    <polygon points="65.56,34.44 54.59,38.91 57.84,42.16" />
+    <polygon points="90,50 61.09,45.41 61.09,50" />
+    <polygon points="65.56,65.56 61.09,54.59 57.84,57.84" />
+    <polygon points="50,90 54.59,61.09 50,61.09" />
+    <polygon points="34.44,65.56 45.41,61.09 42.16,57.84" />
+    <polygon points="10,50 38.91,54.59 38.91,50" />
+    <polygon points="34.44,34.44 38.91,45.41 42.16,42.16" />
+  </g>
+  <g fill={light ? `url(#${uid}-d)` : 'currentColor'} fill-opacity={light ? 1 : 0.6}>
+    <polygon points="50,4 50,38.91 54.59,38.91" />
+    <polygon points="65.56,34.44 57.84,42.16 61.09,45.41" />
+    <polygon points="90,50 61.09,50 61.09,54.59" />
+    <polygon points="65.56,65.56 57.84,57.84 54.59,61.09" />
+    <polygon points="50,90 50,61.09 45.41,61.09" />
+    <polygon points="34.44,65.56 42.16,57.84 38.91,54.59" />
+    <polygon points="10,50 38.91,50 38.91,45.41" />
+    <polygon points="34.44,34.44 42.16,42.16 45.41,38.91" />
+  </g>
+  {light ? (
+    <>
+      <circle cx="50" cy="50" r="4.1" fill="#0A1530" />
+      <circle cx="50" cy="50" r="4.1" fill="none" stroke="#4C86FF" stroke-width="0.6" stroke-opacity="0.5" />
+    </>
+  ) : (
+    <circle cx="50" cy="50" r="3.3" fill="none" stroke="currentColor" stroke-width="1.1" />
+  )}
+</svg>

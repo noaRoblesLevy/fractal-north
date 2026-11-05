@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Fractal North compass star">
+  <defs>
+    <linearGradient id="fnLight" x1="0" y1="2" x2="0" y2="94" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E4EDFF"/>
+      <stop offset="0.45" stop-color="#BBD3FF"/>
+      <stop offset="1" stop-color="#4C86FF"/>
+    </linearGradient>
+    <linearGradient id="fnDark" x1="0" y1="2" x2="0" y2="94" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4C86FF"/>
+      <stop offset="0.45" stop-color="#1F4FE0"/>
+      <stop offset="1" stop-color="#16308F"/>
+    </linearGradient>
+  </defs>
+
+  <!-- North (tallest) -->
+  <polygon fill="url(#fnLight)" points="50,4 45.41,38.91 50,38.91"/>
+  <polygon fill="url(#fnDark)"  points="50,4 50,38.91 54.59,38.91"/>
+  <!-- North-east (short) -->
+  <polygon fill="url(#fnLight)" points="65.56,34.44 54.59,38.91 57.84,42.16"/>
+  <polygon fill="url(#fnDark)"  points="65.56,34.44 57.84,42.16 61.09,45.41"/>
+  <!-- East -->
+  <polygon fill="url(#fnLight)" points="90,50 61.09,45.41 61.09,50"/>
+  <polygon fill="url(#fnDark)"  points="90,50 61.09,50 61.09,54.59"/>
+  <!-- South-east (short) -->
+  <polygon fill="url(#fnLight)" points="65.56,65.56 61.09,54.59 57.84,57.84"/>
+  <polygon fill="url(#fnDark)"  points="65.56,65.56 57.84,57.84 54.59,61.09"/>
+  <!-- South -->
+  <polygon fill="url(#fnLight)" points="50,90 54.59,61.09 50,61.09"/>
+  <polygon fill="url(#fnDark)"  points="50,90 50,61.09 45.41,61.09"/>
+  <!-- South-west (short) -->
+  <polygon fill="url(#fnLight)" points="34.44,65.56 45.41,61.09 42.16,57.84"/>
+  <polygon fill="url(#fnDark)"  points="34.44,65.56 42.16,57.84 38.91,54.59"/>
+  <!-- West -->
+  <polygon fill="url(#fnLight)" points="10,50 38.91,54.59 38.91,50"/>
+  <polygon fill="url(#fnDark)"  points="10,50 38.91,50 38.91,45.41"/>
+  <!-- North-west (short) -->
+  <polygon fill="url(#fnLight)" points="34.44,34.44 38.91,45.41 42.16,42.16"/>
+  <polygon fill="url(#fnDark)"  points="34.44,34.44 42.16,42.16 45.41,38.91"/>
+
+  <!-- Center facet dot -->
+  <circle cx="50" cy="50" r="4.1" fill="#0A1530"/>
+  <circle cx="50" cy="50" r="4.1" fill="none" stroke="#4C86FF" stroke-width="0.6" stroke-opacity="0.5"/>
+</svg>

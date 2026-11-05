@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Star from '../components/Star.astro';
+
+const github = 'https://github.com/noaRoblesLevy';
+const email = 'hello@fractalnorth.com'; // placeholder, update when ready
+---
+<BaseLayout
+  title="About"
+  description="What Fractal North is and what it researches."
+  ogRoute="about"
+>
+  <article class="container about">
+    <header class="about-head">
+      <Star size={56} class="about-star" />
+      <p class="eyebrow">Quantitative Research</p>
+      <h1>About Fractal North</h1>
+    </header>
+
+    <div class="prose about-prose">
+      <p class="lede">
+        Fractal North is a research notebook on quantitative finance: an open
+        record of what I am learning, building, and getting wrong.
+      </p>
+
+      <h2>What I research</h2>
+      <p>
+        The through-line is the distance between a model and a market. I write
+        about market microstructure, the honest evaluation of trading
+        strategies, and the statistics of backtesting, where selection bias and
+        regime change quietly undo results that looked airtight on paper.
+      </p>
+      <p>
+        On the building side, I work on low-latency market-data infrastructure
+        and simulation: a C++ limit order book reconstruction and an
+        inventory-aware market-making simulator. The code exists to pressure-test
+        the ideas, not the other way around.
+      </p>
+
+      <h2>What this is not</h2>
+      <p>
+        Nothing here is investment advice or a signal service. It is research and
+        education: methods, derivations, and post-mortems meant to be read,
+        questioned, and reproduced.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        The best way to reach me is by email, or through the code on GitHub.
+      </p>
+      <ul class="contact-list">
+        <li>
+          <span class="contact-label">Email</span>
+          <a href={`mailto:${email}`}>{email}</a>
+        </li>
+        <li>
+          <span class="contact-label">GitHub</span>
+          <a href={github} target="_blank" rel="me noopener">github.com/noaRoblesLevy</a>
+        </li>
+        <li>
+          <span class="contact-label">CV</span>
+          <a href="/cv.pdf">Download CV (placeholder)</a>
+        </li>
+      </ul>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .about {
+    max-width: var(--measure);
+    padding-top: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
+  }
+  .about-head {
+    margin-bottom: 2rem;
+  }
+  .about-star {
+    margin-bottom: 1.25rem;
+  }
+  .about-head h1 {
+    font-size: var(--step-3);
+    margin-top: 0.4rem;
+  }
+  .contact-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .contact-list li {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+  }
+  .contact-label {
+    flex: none;
+    width: 4.5rem;
+    font-size: var(--step--1);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-faint);
+  }
+</style>

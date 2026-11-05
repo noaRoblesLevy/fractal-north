@@ -1,0 +1,89 @@
+---
+import Star from './Star.astro';
+const year = new Date().getFullYear();
+const github = 'https://github.com/noaRoblesLevy';
+---
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <Star size={30} variant="mono" class="footer-star" />
+      <div>
+        <p class="footer-word">Fractal North Research</p>
+        <p class="footer-copy">© {year} Fractal North Research</p>
+      </div>
+    </div>
+
+    <p class="footer-disclaimer">
+      Research and education only. Nothing on this site is investment advice.
+    </p>
+
+    <nav class="footer-links" aria-label="Footer">
+      <a href="/rss.xml">RSS</a>
+      <a href={github} rel="me noopener" target="_blank">GitHub</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--space-section);
+    border-top: 1px solid var(--border);
+    background: color-mix(in srgb, var(--surface) 40%, transparent);
+  }
+  .footer-inner {
+    display: grid;
+    gap: 1.25rem;
+    padding-block: 2.5rem;
+    grid-template-columns: 1fr;
+    align-items: center;
+  }
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .footer-star {
+    color: var(--ice);
+    flex: none;
+  }
+  .footer-word {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 1rem;
+    color: var(--text);
+  }
+  .footer-copy {
+    font-size: var(--step--1);
+    color: var(--text-faint);
+  }
+  .footer-disclaimer {
+    font-size: var(--step--1);
+    color: var(--text-muted);
+    max-width: 44ch;
+  }
+  .footer-links {
+    display: flex;
+    gap: 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  .footer-links a:hover {
+    color: var(--link-hover);
+  }
+
+  @media (min-width: 820px) {
+    .footer-inner {
+      grid-template-columns: 1.2fr 1.4fr auto;
+      gap: 2rem;
+    }
+    .footer-links {
+      justify-content: flex-end;
+    }
+  }
+</style>

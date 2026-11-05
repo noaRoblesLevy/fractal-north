@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Star from '../components/Star.astro';
+---
+<BaseLayout
+  title="Page not found"
+  description="This page could not be found."
+  ogRoute="site"
+  noindex={true}
+>
+  <section class="notfound container">
+    <Star size={72} class="nf-star" />
+    <p class="eyebrow">Error 404</p>
+    <h1>Off the chart</h1>
+    <p class="nf-desc">
+      The compass could not find this page. It may have moved, or it never
+      existed. Let us get you back to known coordinates.
+    </p>
+    <div class="nf-actions">
+      <a href="/" class="btn btn-primary">Back home</a>
+      <a href="/research" class="btn btn-ghost">Browse research</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-block: clamp(3rem, 2rem + 6vw, 6rem);
+  }
+  .nf-star {
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 12px 32px color-mix(in srgb, var(--cobalt) 40%, transparent));
+  }
+  .notfound h1 {
+    font-size: var(--step-4);
+    margin-top: 0.4rem;
+  }
+  .nf-desc {
+    margin-top: 1rem;
+    max-width: 44ch;
+    color: var(--text-muted);
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+  .nf-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+</style>

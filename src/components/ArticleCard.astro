@@ -1,0 +1,50 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+import { readingTime } from '../lib/content';
+
+interface Props {
+  entry: CollectionEntry<'research'>;
+}
+const { entry } = Astro.props;
+const { title, date, abstract, tags, draft } = entry.data;
+const mins = readingTime(entry.body);
+---
+<article class="card card-article">
+  <div class="card-meta">
+    <FormattedDate date={date} />
+    <span class="dot" aria-hidden="true">·</span>
+    <span>{mins}</span>
+    {draft && (
+      <>
+        <span class="dot" aria-hidden="true">·</span>
+        <span class="draft-tag">Draft</span>
+      </>
+    )}
+  </div>
+  <h3 class="card-title">
+    <a href={`/research/${entry.id}`} class="card-link">{title}</a>
+  </h3>
+  <p class="card-abstract">{abstract}</p>
+  {tags.length > 0 && (
+    <ul class="tag-row">
+      {tags.slice(0, 4).map((t) => <li class="tag">{t}</li>)}
+    </ul>
+  )}
+</article>
+
+<style>
+  .card-abstract {
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+  .draft-tag {
+    color: var(--azure);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+  .card-article .tag-row {
+    margin-top: auto;
+    padding-top: 0.4rem;
+  }
+</style>

@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Star from '../components/Star.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getResearch, getProjects } from '../lib/content';
+
+const research = (await getResearch()).slice(0, 3);
+const projects = (await getProjects()).filter((p) => p.data.featured).slice(0, 2);
+---
+<BaseLayout
+  title="Fractal North"
+  description="Quantitative research: articles, projects, and notes on markets, models, and method."
+  ogRoute="site"
+>
+  <section class="hero">
+    <div class="container hero-inner">
+      <Star size={92} class="hero-star" />
+      <p class="eyebrow hero-eyebrow">Quantitative Research</p>
+      <h1 class="hero-word">Fractal North</h1>
+      <p class="hero-desc">
+        A research notebook on markets, models, and method: where backtests go
+        wrong, how microstructure really behaves, and what survives contact with
+        live data.
+      </p>
+      <div class="hero-actions">
+        <a href="/research" class="btn btn-primary">Read the research</a>
+        <a href="/projects" class="btn btn-ghost">See projects</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section container">
+    <div class="section-head">
+      <h2>Latest research</h2>
+      <a href="/research" class="section-more">All articles →</a>
+    </div>
+    {research.length > 0 ? (
+      <div class="grid grid-3">
+        {research.map((entry) => <ArticleCard entry={entry} />)}
+      </div>
+    ) : (
+      <p class="muted">No published articles yet.</p>
+    )}
+  </section>
+
+  <section class="section container">
+    <div class="section-head">
+      <h2>Featured projects</h2>
+      <a href="/projects" class="section-more">All projects →</a>
+    </div>
+    <div class="grid grid-2">
+      {projects.map((entry) => <ProjectCard entry={entry} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(3rem, 2rem + 7vw, 7rem);
+  }
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .hero-star {
+    filter: drop-shadow(0 14px 40px color-mix(in srgb, var(--cobalt) 45%, transparent));
+    animation: rise 0.8s var(--ease) both;
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.96);
+    }
+  }
+  .hero-eyebrow {
+    margin-top: 1.5rem;
+  }
+  .hero-word {
+    font-size: var(--step-4);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-top: 0.4rem;
+  }
+  .hero-desc {
+    margin-top: 1.25rem;
+    max-width: 54ch;
+    font-size: var(--step-1);
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  .section-more {
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    color: var(--link);
+    white-space: nowrap;
+  }
+  .section-more:hover {
+    color: var(--link-hover);
+  }
+</style>

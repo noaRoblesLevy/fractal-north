@@ -1,0 +1,30 @@
+---
+import { getCollection, render } from 'astro:content';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+
+export async function getStaticPaths() {
+  // Drafts build in dev (so you can preview rendering) but are not emitted in
+  // production builds, so they stay out of the sitemap and the live site.
+  const entries = await getCollection(
+    'research',
+    ({ data }) => import.meta.env.DEV || !data.draft
+  );
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings, remarkPluginFrontmatter } = await render(entry);
+---
+<ArticleLayout
+  title={entry.data.title}
+  abstract={entry.data.abstract}
+  date={entry.data.date}
+  updated={entry.data.updated}
+  tags={entry.data.tags}
+  draft={entry.data.draft}
+  minutesRead={remarkPluginFrontmatter.minutesRead}
+  headings={headings}
+  slug={entry.id}
+>
+  <Content />
+</ArticleLayout>

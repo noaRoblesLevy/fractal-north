@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getResearch } from '../../lib/content';
+
+const research = await getResearch();
+---
+<BaseLayout
+  title="Research"
+  description="Long-form quantitative research articles on markets, models, and method."
+  ogRoute="research"
+>
+  <header class="page-head container">
+    <p class="eyebrow">Fractal North</p>
+    <h1>Research</h1>
+    <p class="lede">
+      Long-form articles. Post-mortems, derivations, and working notes on
+      markets, models, and the gap between a backtest and a live track record.
+    </p>
+  </header>
+
+  <section class="section container">
+    {research.length > 0 ? (
+      <div class="grid grid-2 research-list">
+        {research.map((entry) => <ArticleCard entry={entry} />)}
+      </div>
+    ) : (
+      <p class="muted">No published articles yet. Check back soon.</p>
+    )}
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding-top: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
+  }
+  .page-head h1 {
+    font-size: var(--step-3);
+    margin-top: 0.4rem;
+  }
+  .page-head .lede {
+    margin-top: 1rem;
+  }
+  .section {
+    padding-top: 2rem;
+  }
+</style>

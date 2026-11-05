@@ -1,0 +1,44 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+  entry: CollectionEntry<'notes'>;
+}
+const { entry } = Astro.props;
+const { title, date, kind, tags } = entry.data;
+---
+<article class="card card-note">
+  <div class="card-meta">
+    <span class="note-kind">{kind}</span>
+    <span class="dot" aria-hidden="true">·</span>
+    <FormattedDate date={date} />
+  </div>
+  <h3 class="card-title note-title">
+    <a href={`/notes/${entry.id}`} class="card-link">{title}</a>
+  </h3>
+  {tags.length > 0 && (
+    <ul class="tag-row">
+      {tags.slice(0, 3).map((t) => <li class="tag">{t}</li>)}
+    </ul>
+  )}
+</article>
+
+<style>
+  .note-kind {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--eyebrow);
+  }
+  .note-title {
+    font-size: var(--step-0);
+    font-weight: 600;
+    font-family: var(--font-body);
+    line-height: 1.3;
+  }
+  .card-note .tag-row {
+    margin-top: 0.2rem;
+  }
+</style>

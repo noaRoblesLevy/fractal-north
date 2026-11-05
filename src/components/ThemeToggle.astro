@@ -1,0 +1,71 @@
+---
+// Toggle button. The actual theme is set pre-paint by the inline script in
+// BaseHead; this just flips and persists the choice.
+---
+<button
+  id="theme-toggle"
+  type="button"
+  class="theme-toggle"
+  aria-label="Switch colour theme"
+  title="Switch colour theme"
+>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="12" cy="12" r="4.2" fill="currentColor" />
+    <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <path d="M12 2.5v2.4M12 19.1v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7" />
+    </g>
+  </svg>
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M20 14.2A8 8 0 0 1 9.8 4 8 8 0 1 0 20 14.2Z" fill="currentColor" />
+  </svg>
+</button>
+
+<style>
+  .theme-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--surface) 55%, transparent);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.18s var(--ease), border-color 0.18s var(--ease),
+      background 0.18s var(--ease);
+  }
+  .theme-toggle:hover {
+    color: var(--link-hover);
+    border-color: var(--border-strong);
+  }
+  .theme-toggle svg {
+    grid-area: 1 / 1;
+  }
+  /* Default (dark theme): show the sun (click -> go light). */
+  .icon-moon {
+    display: none;
+  }
+  .icon-sun {
+    display: block;
+  }
+  :root[data-theme='light'] .icon-sun {
+    display: none;
+  }
+  :root[data-theme='light'] .icon-moon {
+    display: block;
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('theme-toggle');
+  btn?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try {
+      localStorage.setItem('fn-theme', next);
+    } catch (e) {
+      /* storage unavailable: still toggles for this page */
+    }
+  });
+</script>

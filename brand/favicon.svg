@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Fractal North">
+  <!-- Simplified favicon: same 8-point silhouette, flat two-tone, no gradients. -->
+  <g fill="#7FA8FF">
+    <polygon points="50,4 45.41,38.91 50,38.91"/>
+    <polygon points="65.56,34.44 54.59,38.91 57.84,42.16"/>
+    <polygon points="90,50 61.09,45.41 61.09,50"/>
+    <polygon points="65.56,65.56 61.09,54.59 57.84,57.84"/>
+    <polygon points="50,90 54.59,61.09 50,61.09"/>
+    <polygon points="34.44,65.56 45.41,61.09 42.16,57.84"/>
+    <polygon points="10,50 38.91,54.59 38.91,50"/>
+    <polygon points="34.44,34.44 38.91,45.41 42.16,42.16"/>
+  </g>
+  <g fill="#1F4FE0">
+    <polygon points="50,4 50,38.91 54.59,38.91"/>
+    <polygon points="65.56,34.44 57.84,42.16 61.09,45.41"/>
+    <polygon points="90,50 61.09,50 61.09,54.59"/>
+    <polygon points="65.56,65.56 57.84,57.84 54.59,61.09"/>
+    <polygon points="50,90 50,61.09 45.41,61.09"/>
+    <polygon points="34.44,65.56 42.16,57.84 38.91,54.59"/>
+    <polygon points="10,50 38.91,50 38.91,45.41"/>
+    <polygon points="34.44,34.44 42.16,42.16 45.41,38.91"/>
+  </g>
+  <circle cx="50" cy="50" r="3.6" fill="#0A1530"/>
+</svg>

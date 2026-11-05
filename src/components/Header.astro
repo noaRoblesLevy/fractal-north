@@ -1,0 +1,239 @@
+---
+import Star from './Star.astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+const nav = [
+  { href: '/research', label: 'Research' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/notes', label: 'Notes' },
+  { href: '/about', label: 'About' },
+];
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => path === href || path.startsWith(href + '/');
+---
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="lockup" aria-label="Fractal North, home">
+      <Star size={44} class="lockup-star" />
+      <span class="lockup-divider" aria-hidden="true"></span>
+      <span class="lockup-text">
+        <span class="wordmark">Fractal North</span>
+        <span class="tagline">Quantitative Research</span>
+      </span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <button
+        id="nav-toggle"
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+        aria-label="Menu"
+      >
+        <span></span><span></span><span></span>
+      </button>
+      <ul id="nav-menu" class="nav-menu">
+        {nav.map((item) => (
+          <li>
+            <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <ThemeToggle />
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: saturate(140%) blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 4.25rem;
+    padding-block: 0.6rem;
+  }
+
+  /* --- Lockup --- */
+  .lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .lockup-divider {
+    width: 1px;
+    height: 2.5rem;
+    background: var(--border-strong);
+  }
+  .lockup-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.12rem;
+    line-height: 1;
+  }
+  .wordmark {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.45rem;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .tagline {
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--eyebrow);
+  }
+
+  /* --- Nav --- */
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-menu a {
+    display: inline-block;
+    padding: 0.45rem 0.7rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.16s var(--ease), background 0.16s var(--ease);
+  }
+  .nav-menu a:hover {
+    color: var(--text);
+    background: color-mix(in srgb, var(--surface) 60%, transparent);
+  }
+  .nav-menu a[aria-current='page'] {
+    color: var(--link);
+    background: color-mix(in srgb, var(--cobalt) 12%, transparent);
+  }
+
+  .nav-toggle {
+    display: none;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--surface) 55%, transparent);
+    cursor: pointer;
+    padding: 0;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 1.1rem;
+    height: 2px;
+    margin: 3px auto;
+    background: var(--text-muted);
+    border-radius: 2px;
+    transition: transform 0.2s var(--ease), opacity 0.2s var(--ease);
+  }
+
+  /* --- Mobile --- */
+  @media (max-width: 760px) {
+    .wordmark {
+      font-size: 1.2rem;
+      letter-spacing: 0.14em;
+    }
+    .lockup-divider {
+      height: 2.1rem;
+    }
+    .nav-toggle {
+      display: block;
+    }
+    .nav-menu {
+      position: absolute;
+      top: calc(100% + 1px);
+      right: 0;
+      left: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 0.5rem clamp(1rem, 0.5rem + 2.5vw, 2rem) 1rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      display: none;
+    }
+    .site-nav {
+      position: static;
+    }
+    .nav-menu.open {
+      display: flex;
+    }
+    .nav-menu a {
+      padding: 0.75rem 0.5rem;
+      font-size: 1.05rem;
+      border-radius: 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-toggle[aria-expanded='true'] span:nth-child(1) {
+      transform: translateY(5px) rotate(45deg);
+    }
+    .nav-toggle[aria-expanded='true'] span:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-toggle[aria-expanded='true'] span:nth-child(3) {
+      transform: translateY(-5px) rotate(-45deg);
+    }
+  }
+  @media (max-width: 400px) {
+    .tagline {
+      font-size: 0.55rem;
+      letter-spacing: 0.22em;
+    }
+    .wordmark {
+      font-size: 1.08rem;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('nav-menu');
+  toggle?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  // Close on navigation / escape.
+  menu?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => {
+      menu.classList.remove('open');
+      toggle?.setAttribute('aria-expanded', 'false');
+    })
+  );
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu?.classList.contains('open')) {
+      menu.classList.remove('open');
+      toggle?.setAttribute('aria-expanded', 'false');
+      (toggle as HTMLElement)?.focus();
+    }
+  });
+</script>

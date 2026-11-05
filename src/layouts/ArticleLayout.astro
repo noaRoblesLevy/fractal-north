@@ -1,0 +1,234 @@
+---
+import type { MarkdownHeading } from 'astro';
+import BaseLayout from './BaseLayout.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+
+interface Props {
+  title: string;
+  abstract: string;
+  date: Date;
+  updated?: Date;
+  tags: string[];
+  draft: boolean;
+  minutesRead?: string;
+  headings: MarkdownHeading[];
+  slug: string;
+}
+const { title, abstract, date, updated, tags, draft, minutesRead, headings, slug } =
+  Astro.props;
+
+const canonical = new URL(`/research/${slug}`, Astro.site).href;
+const year = date.getUTCFullYear();
+const citation = `Fractal North Research (${year}). "${title}". ${canonical}`;
+---
+<BaseLayout
+  title={title}
+  description={abstract}
+  ogRoute={`research/${slug}`}
+  type="article"
+  publishedTime={date}
+  modifiedTime={updated}
+  noindex={draft}
+>
+  <article class="article">
+    <div class="container">
+      <header class="article-head">
+        <p class="eyebrow">
+          <a href="/research" class="crumb">Research</a>
+        </p>
+        {draft && (
+          <p class="draft-badge" role="status">
+            <span class="status-dot"></span> Draft · work in progress
+          </p>
+        )}
+        <h1 class="article-title">{title}</h1>
+        <p class="article-abstract">{abstract}</p>
+        <div class="article-meta">
+          <FormattedDate date={date} />
+          {minutesRead && (
+            <>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>{minutesRead}</span>
+            </>
+          )}
+          {updated && (
+            <>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Updated <FormattedDate date={updated} /></span>
+            </>
+          )}
+        </div>
+        {tags.length > 0 && (
+          <ul class="tag-row article-tags">
+            {tags.map((t) => <li class="tag">{t}</li>)}
+          </ul>
+        )}
+      </header>
+    </div>
+
+    <div class="container">
+      <div class="article-grid">
+        <aside class="article-aside">
+          <div class="aside-sticky">
+            <TableOfContents headings={headings} />
+          </div>
+        </aside>
+
+        <div class="prose article-prose">
+          <slot />
+
+          <section class="cite" aria-labelledby="cite-h">
+            <h2 id="cite-h" class="cite-title eyebrow">Cite this</h2>
+            <div class="cite-row">
+              <p class="cite-text" id="cite-text">{citation}</p>
+              <button class="btn btn-ghost cite-copy" type="button" data-cite={citation}>
+                Copy
+              </button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .article-head {
+    max-width: var(--measure);
+    margin-inline: auto;
+    padding-top: clamp(2rem, 1rem + 4vw, 4rem);
+    padding-bottom: 1.5rem;
+  }
+  .crumb {
+    text-decoration: none;
+    color: var(--eyebrow);
+  }
+  .crumb:hover {
+    color: var(--link-hover);
+  }
+  .draft-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    background: color-mix(in srgb, var(--azure) 10%, transparent);
+    color: var(--text-muted);
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .article-title {
+    font-size: var(--step-4);
+    margin-top: 1rem;
+    line-height: 1.04;
+  }
+  .article-abstract {
+    margin-top: 1rem;
+    font-size: var(--step-1);
+    color: var(--text-muted);
+    line-height: 1.5;
+    max-width: 62ch;
+  }
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+    font-size: var(--step--1);
+    color: var(--text-faint);
+  }
+  .article-meta .dot {
+    opacity: 0.6;
+  }
+  .article-tags {
+    margin-top: 0.9rem;
+  }
+
+  .article-grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+  .article-aside {
+    display: none;
+  }
+  .article-prose {
+    margin-inline: auto;
+  }
+
+  @media (min-width: 1200px) {
+    .article-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, var(--measure)) minmax(0, 1fr);
+      gap: 3rem;
+      align-items: start;
+    }
+    .article-aside {
+      display: block;
+      grid-column: 1;
+      justify-self: end;
+      width: 100%;
+      max-width: 15rem;
+    }
+    .aside-sticky {
+      position: sticky;
+      top: 6rem;
+      max-height: calc(100vh - 8rem);
+      overflow-y: auto;
+    }
+    .article-prose {
+      grid-column: 2;
+    }
+  }
+
+  /* Cite block */
+  .cite {
+    margin-top: 3.5rem;
+    padding: 1.25rem 1.4rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .cite-title {
+    margin-bottom: 0.75rem;
+  }
+  .cite-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .cite-text {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+    flex: 1 1 20rem;
+  }
+  .cite-copy {
+    flex: none;
+    padding: 0.5rem 0.9rem;
+    font-size: var(--step--1);
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.cite-copy').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const text = btn.dataset.cite ?? '';
+      try {
+        await navigator.clipboard.writeText(text);
+        const prev = btn.textContent;
+        btn.textContent = 'Copied';
+        setTimeout(() => (btn.textContent = prev), 1600);
+      } catch (e) {
+        /* clipboard blocked: no-op */
+      }
+    });
+  });
+</script>
