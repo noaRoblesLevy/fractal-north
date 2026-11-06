@@ -43,9 +43,16 @@ Three collections live in `src/content`:
 
 An article with `draft: true` renders in `npm run dev` so you can check it, but
 is **not built in production** and is kept out of listings, the RSS feed, and
-the sitemap. The sample article
-`src/content/research/why-my-backtest-lied.mdx` is a draft. To publish it, set
-`draft: false` in its frontmatter.
+the sitemap. To publish it, set `draft: false` in its frontmatter.
+
+### Papers and figures
+
+A research article can ship with a full paper: put the PDF in `public/papers/`
+and the figures in `public/figures/<slug>/`, and link them from the article.
+`carry-or-dispersion.mdx` is the example. Its LaTeX source and the script that
+generates every number and figure live in the
+[Quant-Research](https://github.com/noaRoblesLevy/Quant-Research) repository
+(`ACTIVE/funding-carry-harvest/paper/`).
 
 ## Brand
 
